@@ -1,0 +1,3 @@
+1.app工程是一个demo空工程，只为测试是否可以引入自定义的plugin
+2.createPlugin工程是真正的自定义Plugin,真正的逻辑都在此工程中
+3.buildSrc工程只是一个容器工程，可以直接使用，不需把生成的plugin上传mave，方面自测
