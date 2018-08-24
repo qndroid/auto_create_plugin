@@ -126,6 +126,7 @@ class CreatePluginProjectTask extends DefaultTask {
     def pluginFile = project.file(pluginPath)
     createFile(pluginFile, false)
     pluginFile.withWriter { writer ->
+      writer.append("package $pluginPackageName")
       writer.append("import org.gradle.api.Plugin\n\n")
       writer.append("import org.gradle.api.Project\n\n")
       writer.append("class ${pluginClassName} implements Plugin<Project> { \n")
