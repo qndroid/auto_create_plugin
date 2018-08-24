@@ -16,7 +16,10 @@
 
 package com.qndroid.plugin.tasks
 
+import com.qndroid.plugin.extension.PluginConfigurationExtension
 import org.gradle.api.DefaultTask
+import org.gradle.api.Project
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 
 /**
@@ -28,13 +31,25 @@ class CreatePluginProjectTask extends DefaultTask {
   def pluginProjectName
   def pluginClassName
 
+  @Input
+  PluginConfigurationExtension pluginConfigurationExtension
+
   CreatePluginProjectTask() {
     group = 'plugin_create'
   }
 
   @TaskAction
   void taskAction() {
-    if (checkParams()) executeLogic()
+    if (pluginConfigurationExtension.checkParams()) {
+      initParams()
+      executeLogic()
+    }
+  }
+
+  private void initParams() {
+    this.pluginProjectName = pluginConfigurationExtension.pluginProjectName
+    this.pluginPackageName = pluginConfigurationExtension.pluginPackageName
+    this.pluginClassName = pluginConfigurationExtension.pluginClassName
   }
 
   void executeLogic() {
@@ -65,8 +80,7 @@ class CreatePluginProjectTask extends DefaultTask {
       pack = packFile.path + "/"
     }
     //3.1 生成properties文件
-    def plguinPropertiesPath = "$pluginProjectName/src/main/resources/META-INF/gradle-plugins/$pluginPackageName" +
-        ".properties"
+    def plguinPropertiesPath = "$pack${pluginPackageName}.properties"
     def plguinPropertiesFile = project.file(plguinPropertiesPath)
     createFile(plguinPropertiesFile, false)
     plguinPropertiesFile.withWriter { writer ->
@@ -97,38 +111,30 @@ class CreatePluginProjectTask extends DefaultTask {
   }
 
   /**
-   * 参数较验
-   * @return
-   */
-  boolean checkParams() {
-    if (pluginProjectName == null || pluginProjectName == "") return false
-    if (pluginPackageName == null || pluginPackageName == "") return false
-    if (pluginClassName == null || pluginClassName == "") return false
-
-    return true
-  }
-
-  /**
    * 文件及文件夹创建
    * @param file
    * @param isDir
    */
-  private void createFile(File file, boolean isDir) {
-    if (file == null || !file.exists()) {
-      isDir ? file.mkdir() : file.createNewFile()
+  void createFile(File file, boolean isDir) {
+    try {
+      if (file == null || !file.exists()) {
+        isDir ? file.mkdir() : file.createNewFile()
+      }
+    } catch (Exception e) {
+      e.printStackTrace()
     }
   }
 
   /**
    * 创建Plugin类文件*/
   private void createPluginClass(rootPath) {
-    def pluginPath = "${rootPath}/$pluginPackageName/$pluginClassName"
+    def pluginPath = "${rootPath}${pluginClassName}.groovy"
     def pluginFile = project.file(pluginPath)
     createFile(pluginFile, false)
     pluginFile.withWriter { writer ->
-      writer.append("package $pluginPackageName")
-      writer.append("import org.gradle.api.Plugin\n\n")
-      writer.append("import org.gradle.api.Project\n\n")
+      writer.append("package $pluginPackageName\n\n")
+      writer.append("import org.gradle.api.Plugin\n")
+      writer.append("import org.gradle.api.Project\n")
       writer.append("class ${pluginClassName} implements Plugin<Project> { \n")
       writer.append("   @Override\n")
       writer.append("   void apply(Project project) {\n\n")

@@ -1,3 +1,4 @@
 include ':app'
 include ':createPlugin'
 include ':buildSrc'
+include ':test'
