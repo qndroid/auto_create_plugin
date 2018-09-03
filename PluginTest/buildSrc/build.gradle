@@ -2,8 +2,9 @@ apply plugin: 'java'
 
 repositories {
   jcenter()
+  google()
 }
 
 dependencies {
-  compile project(':createPlugin')
+  compile project(':sh-review-gradle-plugin')
 }

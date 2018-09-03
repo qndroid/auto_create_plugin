@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.qndroid.plugin'
+
 
 android {
   compileSdkVersion 27
@@ -29,10 +29,3 @@ dependencies {
   androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
-
-pluginConfig {
-
-  pluginProjectName = "test"
-  pluginPackageName = "com.qndroid.test"
-  pluginClassName = "TestPlugin"
-}

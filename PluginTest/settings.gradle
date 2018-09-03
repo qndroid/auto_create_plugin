@@ -1,4 +1,6 @@
-include ':app'
-include ':createPlugin'
+include ':sh-review-gradle-plugin'
+include ':sh-review-sample'
 include ':buildSrc'
-include ':test'
+
+rootProject.name = 'review-plugin'
+

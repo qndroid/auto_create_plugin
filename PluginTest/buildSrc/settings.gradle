@@ -1,2 +1,2 @@
-include ':createPlugin'
-project(':createPlugin').projectDir = new File('../createPlugin')
+include ':sh-review-gradle-plugin'
+project(':sh-review-gradle-plugin').projectDir = new File('../sh-review-gradle-plugin')

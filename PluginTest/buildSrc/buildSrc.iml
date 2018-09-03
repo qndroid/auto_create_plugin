@@ -27,8 +27,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="createPlugin" exported="" />
-    <orderEntry type="module" module-name="createPlugin" exported="" />
+    <orderEntry type="module" module-name="sh-review-gradle-plugin" exported="" />
+    <orderEntry type="module" module-name="sh-review-gradle-plugin" exported="" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="gradle-api-4.4" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="groovy-all-2.4.12" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="gradle-installation-beacon-4.4" level="project" />
